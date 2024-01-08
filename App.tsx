@@ -1,117 +1,69 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { Alert, Image, StyleSheet, Text, View } from 'react-native';
+import Accordian from './components/Accordian';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import HelpModal from './components/HelpModal';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+const App = () => {
+  const accordianData = [
+    {
+      heading: "NRO/NRE Account",
+      subText: "Write some copy here to help the user understand Tax Advisory",
+      icon: <Image source={require('./assets/oval.png')} />,
+      rightArrow: <FontAwesomeIcon icon={faAngleRight} />,
+    },
+    {
+      heading: "Fixed Deposit",
+      subText: "Write some copy here to help the user understand Legal Advisory",
+      icon: <Image source={require('./assets/oval.png')} />,
+      rightArrow: <FontAwesomeIcon icon={faAngleRight} />,
+    },
+    {
+      heading: "Debt Fund",
+      subText: "Write some copy here to help the user understand Start-ups",
+      icon: <Image source={require('./assets/oval.png')} />,
+      rightArrow: <FontAwesomeIcon icon={faAngleRight} />,
+    },
+  ];
+  const handleAskNowPress = () => {
+    Alert.alert("Ask Now button pressed!");
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <>
+      <View style={styles.container}>
+        <Text style={styles.MainHeading}>Low Risk Investment</Text>
+        <HelpModal
+          backgroundColor="#FFCB86"
+          buttonBackgroundColor="#3E89FA"
+          onPress={handleAskNowPress}
+        />
+        {accordianData.map((data, index) => (
+          <Accordian
+            key={index}
+            headingtext={data.heading}
+            subText={data.subText}
+            icon={data.icon}
+            rightArrow={data.rightArrow}
+          />
+        ))}
+      </View>
+    </>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    display: 'flex',
+    backgroundColor: 'white',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
+  MainHeading: {
+    margin: 25,
+    marginBottom: 2,
     fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+    fontWeight: '600',
+    color: '#1F3151',
   },
 });
 
